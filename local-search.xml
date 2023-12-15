@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>使用Java实现linux的grep命令</title>
+    <link href="/2021/06/12/%E6%96%87%E7%AB%A0/"/>
+    <url>/2021/06/12/%E6%96%87%E7%AB%A0/</url>
+    
+    <content type="html"><![CDATA[<p>使用java程序实现linux的grep命令，支持遍历查找，直接上代码：</p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-keyword">Grep</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-keyword">grep</span>(String keyword, String extension, <span class="hljs-keyword">File</span> directory, <span class="hljs-keyword">boolean</span> recursive) &#123;<br>        <span class="hljs-keyword">File</span>[] files = directory.listFiles();<br><br>        <span class="hljs-keyword">if</span> (files != <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">File</span> <span class="hljs-keyword">file</span> : files) &#123;<br>                Pattern pattern = Pattern.<span class="hljs-keyword">compile</span>(<span class="hljs-string">&quot;.&quot;</span> + extension);<br>                Matcher matcher = pattern.matcher(<span class="hljs-keyword">file</span>.getName());<br>                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">file</span>.isFile() &amp;&amp; matcher.matches()) &#123;<br>                    readFile(<span class="hljs-keyword">file</span>, keyword);<br>                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">file</span>.isDirectory() &amp;&amp; recursive) &#123;<br>                    <span class="hljs-keyword">grep</span>(keyword, extension, <span class="hljs-keyword">file</span>, <span class="hljs-keyword">true</span>);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> readFile(<span class="hljs-keyword">File</span> <span class="hljs-keyword">file</span>, String keyword) &#123;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            BufferedReader reader = <span class="hljs-keyword">new</span> BufferedReader(<span class="hljs-keyword">new</span> FileReader(<span class="hljs-keyword">file</span>));<br>            String line;<br>            <span class="hljs-keyword">int</span> number = <span class="hljs-number">0</span>;<br><br>            <span class="hljs-keyword">while</span> ((line = reader.readLine()) != <span class="hljs-keyword">null</span>) &#123;<br>                number++;<br><br>                <span class="hljs-keyword">boolean</span> matches = line.contains(keyword);<br>                <span class="hljs-keyword">if</span> (matches) &#123;<br>                    System.out.<span class="hljs-keyword">println</span>(line);<br>                &#125;<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>原创</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
